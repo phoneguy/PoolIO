@@ -1,0 +1,34 @@
+import org.openhab.core.library.types.*
+import java.util.List
+rule "Send the pool stats"
+when
+       Item Arduino received update
+then
+        var List<String> items = Arduino.state.toString().trim().split(" ")
+        var Number value
+        //value = items.size() 
+        value = Float.parseFloat(items.get(0))
+        Pooltemp.postUpdate(value)
+        value = Float.parseFloat(items.get(1))
+        Airtemp.postUpdate(value)
+        value = Float.parseFloat(items.get(2))
+        Humidity.postUpdate(value)
+        value = Float.parseFloat(items.get(3))
+        Pressure.postUpdate(value)
+        value = Float.parseFloat(items.get(4))
+        Dcvolt.postUpdate(value)
+        value = Float.parseFloat(items.get(5))
+        Test.postUpdate(value)
+        value = Float.parseFloat(items.get(6))
+        Relay1.postUpdate(value)
+        value = Float.parseFloat(items.get(7))
+        Relay2.postUpdate(value)
+
+end
+
+
+
+
+
+
+
