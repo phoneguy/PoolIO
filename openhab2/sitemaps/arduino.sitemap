@@ -1,26 +1,20 @@
-sitemap basic label="My Pool Control" {
-   Frame label="Date" {
-       Text item=Date icon="calendar"
-   }
-   Frame label="Demo" {
-       Text item=Pooltemp valuecolor=[>35="orange",>20="green",<=20="blue"]
-       Text item=Airtemp valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Humidity valuecolor=[=="BRIGHT"="orange",=="NORMAL"="green",=="DARK"="gray"]
-       Text item=Pressure valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Dcvolt valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Test valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Relay1 valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Relay2 valuecolor=[>55="orange",>45="green",<=45="blue"]
-
-       Switch item=Relay1 icon="light" mappings=[OFF="All Off"]
-       Switch item=Relay2 icon="light" mappings=[OFF="All Off"]
-
-
-
-
+sitemap arduino label="My Pool Control" {
+   Frame label="Arduino Nano" {
+       Text item=Pooltemp  valuecolor=[>70="orange", >80="green", <=70="blue"]
+       Text item=Airtemp   valuecolor=[>80="orange", >70="green", <=70="blue"]
+       Text item=Humidity  valuecolor=[>60="orange", >50="green", <50="blue", >70="red"]
+       Text item=Pressure  valuecolor=[>990="yellow", >986="green", <=987="blue"]
+       Text item=Accurrent valuecolor=[>55="orange", >45="green", <=45="blue"]
+       Text item=Dcvolt    valuecolor=[>13="orange", >11="green", <=11="blue"]
+       Text item=Dccurrent valuecolor=[>55="orange", >45="green", <=45="blue"]
+       Text item=Acvolt    valuecolor=[>117="orange", >114="green", <=114="blue"]
+       Text item=Relay1    valuecolor=[>55="orange", >45="green", <=45="blue"] 
+       Text item=Relay2    valuecolor=[>55="orange", >45="green", <=45="blue"]
+       Switch item=Pump    icon="light" mappings=[OFF="Pump OFF", ON="Pump ON"]
+       Switch item=Light   icon="light" mappings=[OFF="Light OFF", ON="Light ON"]
 
        }
-   }
+   
 }
 
 

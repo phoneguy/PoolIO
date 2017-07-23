@@ -1,12 +1,14 @@
-String Arduino "Arduino [%s]" (arduino) {serial="/dev/ttyUSB0@9600"}
-Number  Pooltemp "Pooltemp [%u]"    <pooltemp> {channel="pooltemp"}
-Number  Airtemp  "Airtemp [%u °C]"  <airtemp>  (Temperature)
-Number  Humidity "Humidity [%u %%]" <humidity> (Temperature)
-Number  Pressure "Pressure [%i]"    <pressure>
-Number  Dcvolt   "Dcvolt [%u]"      <dcvolt>   (Battery)
-Number  Test     "Test [%u]"        <test>
-Number  Relay1   "Relay1 [%u]"      <relay1>
-Number  Relay2   "Relay2 [%u]"      <relay2>
-Switch PoolPump "Pool Pump" {serial="/dev/ttyUSB0@9600>,ON(R1ON),OFF(R1OFF)"}
-
-
+String Arduino "Arduino [%s]" {serial="/dev/ttyUSB0@9600"}
+DateTime Date    "Date [%1$tA, %1$td.%1$tm.%1$tY %1$tH:%1$tM]"  { channel="ntp:ntp:local:dateTime" }
+Number Pooltemp  "Pool Temperature [%.1f]" <temperature>
+Number Airtemp   "Air Temperature [%.1f]"  <temperature>
+Number Humidity  "Humidity [%d]"           <humidity>
+Number Pressure  "Air Pressure [%d]"       <pressure>
+Number Dccurrent "DC Current [%.1f]"       <battery>
+Number Dcvolt    "DC Voltage [%.1f]"       <battery>   
+Number Accurrent "AC Current [%.1f]"       <battery>
+Number Acvolt    "AC Voltage [%.1f]"       <battery>
+Number Relay1    "Relay One [%d]"          <switch>        
+Number Relay2    "Relay Two [%d]"          <switch>          
+Switch Pump      "Pool Pump"  {serial="/dev/ttyUSB0@9600,ON(R11),OFF(R10)"}    
+Switch Light     "Shed Light" {serial="/dev/ttyUSB0@9600,ON(R21),OFF(R20)"}    
