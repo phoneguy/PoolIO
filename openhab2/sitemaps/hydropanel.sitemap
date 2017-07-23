@@ -1,21 +1,16 @@
 sitemap arduino label="My Hydro Panel Control" {
-   Frame label="Arduino Nano" {
-       Text item=Pooltemp valuecolor=[>35="orange",>20="green",<=20="blue"]
-       Text item=Airtemp valuecolor=[>75="orange",>70="green",<=70="blue"]
-       Text item=Humidity valuecolor=[=="BRIGHT"="orange",=="NORMAL"="green",=="DARK"="gray"]
-       Text item=Pressure valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Accurrent valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Dcvolt valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Dccurrent valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Relay1 valuecolor=[>55="orange",>45="green",<=45="blue"] 
-       Text item=Relay2  valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Acvolt valuecolor=[>55="orange",>45="green",<=45="blue"]
-       
-       Switch item=Pump icon="light" mappings=[OFF="Pump OFF", ON="Pump ON"]
-       Switch item=Light icon="light" mappings=[OFF="Light OFF", ON="Light ON"]
+    Frame label="Arduino Nano" {
+        Text item=Airtemp     valuecolor=[>75="orange",>70="green",<=70="blue"]
+        Text item=Humidity    valuecolor=[=="BRIGHT"="orange",=="NORMAL"="green",=="DARK"="gray"]
 
-       }
-   
+        Text item=Acvolt      valuecolor=[>55="orange",>45="green",<=45="blue"]
+        Text item=Accurrent   valuecolor=[>55="orange",>45="green",<=45="blue"]
+ 
+        Text item=Kilowatthr  valuecolor=[>55="orange",>45="green",<=45="blue"]
+        Text item=Maxkilowatt valuecolor=[>55="orange",>45="green",<=45="blue"]
+        Text item=Minkilowatt valuecolor=[>55="orange",>45="green",<=45="blue"]
+
+    }
 }
 
 
