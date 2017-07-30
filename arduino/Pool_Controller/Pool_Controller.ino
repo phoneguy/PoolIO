@@ -50,17 +50,17 @@
 int pool_temp = 0;
 int air_temp = 0;
 int case_temp = 0;
+int board_temp = 0;
 int motor_temp = 0;
 int solar_temp = 0;
 int voltage = 0;
 int current = 0;
-int dc_volt = 0;
-int dc_current = 0;
+//int dc_volt = 0;
+//int dc_current = 0;
 int ac_volt = 0;
 int ac_voltage = 0;
 int ac_current = 0;
-int ac_kwhr = 0;
-int ac_watts =0;
+int ac_watts = 0;
 float temperature = 0;
 int altitude = 0;
 int humidity = 0;
@@ -76,12 +76,16 @@ int control_msg = 0;
 char buffer[50];
 int relay1_state = 0;
 int relay2_state = 0;
+unsigned long currentMillis= 0;
+long previousMillis = 0;
+long interval = 2000;
 
 // Serial input
-//int cmd = 0;
 String inputString = "";
 boolean stringComplete = false;
 boolean relaystatus = false;
+
+int debug = 0;
 
 SoftwareSerial mySerial(SERIALRX_PIN, SERIALTX_PIN); // RX, TX
 EnergyMonitor emon1;                   // Create an instance
@@ -130,7 +134,7 @@ void setup() {
     delay(100);
     
     // Start compass
-    init_compass();
+    //init_compass();
     
     // Start BlinkM
     BlinkM_begin();
@@ -147,33 +151,33 @@ void setup() {
 }
 
 void loop() {
-    z=read_compass(z);
+    //magz=read_compass(z);
     
     softserial_event();
 
     sensors.requestTemperatures(); // Send the command to get temperature readings
-    pool_temp = ((sensors.getTempCByIndex(0)) * 1.8 + 32);
-    motor_temp = ((sensors.getTempCByIndex(1)) * 1.8 + 32);
+    pool_temp  = ((sensors.getTempCByIndex(0)) * 1.8 + 32);
+    air_temp   = ((sensors.getTempCByIndex(1)) * 1.8 + 32);
     solar_temp = ((sensors.getTempCByIndex(2)) * 1.8 + 32);
     
-    emon1.calcVI(20,2000);                   // Calculate all. No.of half wavelengths (crossings), time-out
-    //emon1.serialprint();                   // Print out all variables (realpower, apparent power, Vrms, Irms, power factor)
-    float realPower       = emon1.realPower; //extract Real Power into variable
-    float apparentPower   = emon1.apparentPower;    //extract Apparent Power into variable
-    float powerFActor     = emon1.powerFactor;      //extract Power Factor into Variable
-    float supplyVoltage   = emon1.Vrms;      //extract Vrms into Variable
-    float Irms            = emon1.Irms;      //extract Irms into Variable
+    emon1.calcVI(20,2000);                       // Calculate all. No.of half wavelengths (crossings), time-out
+    float realPower       = emon1.realPower;     // extract Real Power into variable
+    float apparentPower   = emon1.apparentPower; // extract Apparent Power into variable
+    float powerFActor     = emon1.powerFactor;   // extract Power Factor into Variable
+    float supplyVoltage   = emon1.Vrms;          // extract Vrms into Variable
+    float Irms            = emon1.Irms;          // extract Irms into Variable
+    
     ac_voltage = supplyVoltage; // integer
     ac_current = Irms;          // integer
-    ac_watts   = ac_voltage * ac_current; // integer
-        
-    float calc_dcvolt    = analogRead(DC_VOLT_PIN)    * 0.00488;
-    float calc_dccurrent = analogRead(DC_CURRENT_PIN) * 0.00488;
-    dc_volt    = calc_dcvolt     * 16;
-    dc_current = calc_dccurrent  * 2;
+    ac_watts   = supplyVoltage * Irms; // integer
+
+    //float calc_dcvolt    = analogRead(DC_VOLT_PIN)    * 0.00488;
+    //float calc_dccurrent = analogRead(DC_CURRENT_PIN) * 0.00488;
+    //dc_volt    = calc_dcvolt     * 16;
+    //dc_current = calc_dccurrent  * 2;
 
     temperature  = bmp085GetTemperature(bmp085ReadUT()); //MUST be called first
-    case_temp    = temperature;
+    board_temp   = temperature;
     pressure     = bmp085GetPressure(bmp085ReadUP());
     air_pressure = pressure * 0.01;
     //float atm = pressure / 101325; // "standard atmosphere"
@@ -181,20 +185,27 @@ void loop() {
         
     dht.readHumidity();
     dht.readTemperature();
-    humidity = dht.humidity;
-    air_temp = dht.temperature_F;
+    humidity  = dht.humidity;
+    case_temp = dht.temperature_F;
+  
+    currentMillis = millis();    
+    if(currentMillis - previousMillis >= interval) {
+        // Print to hardware and software serial ports
+        sprintf(buffer, "%i %i %u %u %u %u %u %u %u %u", pool_temp, air_temp, solar_temp, humidity, air_pressure, ac_voltage, ac_current, ac_watts, relay1_state, relay2_state);
+        if (debug == 1) {
+        Serial.println(buffer);
+        }
+        mySerial.println(buffer);
     
-    // Print to hardware and software serial ports
-    sprintf(buffer, "%i %i %u %u %u %u %u %u %u %u", pool_temp, air_temp, humidity, air_pressure, dc_volt, dc_current, ac_voltage, ac_current, relay1_state, relay2_state);
+        // Print to lcd
+        screen_a();
+        
+        previousMillis = millis();   
 
-    Serial.println(buffer);
-    mySerial.println(buffer);
-    
-    // Print to lcd
-    screen_a();
-    
-    BlinkM_fadeToRGB(BLINKM_ADDRESS, pool_temp, air_temp, ac_current);
-    delay(100);
+        }
+      
+    BlinkM_fadeToRGB(BLINKM_ADDRESS, pool_temp, air_temp, solar_temp);
+//    delay(1000);
 }
 
 void softserial_event() {
@@ -206,26 +217,36 @@ void softserial_event() {
         stringComplete = true;
         }
     }
-    if(inputString == "R10"){
+    if(inputString == "R10") {
         Serial.println("Relay 1 OFF"); // Print to USB port
         digitalWrite(RELAY1_PIN, RELAY_OFF);
         relay1_state = 0;
-      }
-    else if (inputString == "R11"){
+        }
+    else if (inputString == "R11") {
         Serial.println("Relay 1 ON");
         digitalWrite(RELAY1_PIN, RELAY_ON);
         relay1_state = 1;
-      }
-    else if (inputString == "R20"){
+        }
+    else if (inputString == "R20") {
         Serial.println("Relay 2 OFF");
         digitalWrite(RELAY2_PIN, RELAY_OFF);
         relay2_state = 0;
-      }
-    else if (inputString == "R21"){
+        }
+    else if (inputString == "R21") {
         Serial.println("Relay 2 ON");
         digitalWrite(RELAY2_PIN, RELAY_ON);
         relay2_state = 1;
-      }
+        }
+    else if (inputString == "D0") {
+        debug = 0;   
+        Serial.println("DEBUG OFF TO USB SERIAL PORT");
+        }
+    else if (inputString == "D1") {
+        debug = 1;  
+        Serial.println("DEBUG ON TO USB SERIAL PORT");
+        }   
+    //}
+      
     inputString = "";
     stringComplete = false;
 }

@@ -40,14 +40,14 @@
 // set this if you're plugging a BlinkM directly into an Arduino,
 // into the standard position on analog in pins 2,3,4,5
 // otherwise you can set it to false or just leave it alone
-const boolean BLINKM_ARDUINO_POWERED = false;
+//const boolean BLINKM_ARDUINO_POWERED = false;
 
-const int CMD_START_BYTE = 0x01;
+//const int CMD_START_BYTE = 0x01;
 
-int blinkm_addr = 0x09;
+//int blinkm_addr = 0x09;
 
-const int serBufLen = 32;
-byte serInBuf[serBufLen];  // array that will hold the serial input string
+//const int serBufLen = 32;
+//byte serInBuf[serBufLen];  // array that will hold the serial input string
 
 //int ledPin = 13;
 /*
