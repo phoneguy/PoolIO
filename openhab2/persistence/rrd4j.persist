@@ -1,0 +1,18 @@
+Strategies {
+    everyMinute:"0 * * * * ?"
+    everyHour : "0 0 * * * ?"
+    everyDay  : "0 0 0 * * ?"
+
+    default = everyChange
+}
+
+Items {
+    Pooltemp : strategy = everyMinute, restoreOnStartup
+    Airtemp : strategy = everyMinute, restoreOnStartup
+    Solartemp : strategy = everyMinute, restoreOnStartup
+    Humidity : strategy = everyMinute, restoreOnStartup
+    Pressure : strategy = everyMinute, restoreOnStartup
+    Acvolt : strategy = everyMinute, restoreOnStartup
+    Accurrent : strategy = everyMinute, restoreOnStartup
+    Acwatts : strategy = everyMinute, restoreOnStartup
+}

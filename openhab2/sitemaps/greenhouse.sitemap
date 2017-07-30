@@ -1,11 +1,13 @@
-sitemap hydropanel label="My Hydro Panel Control" {
-   Frame label="100 AMP 234 Volt Panel" {
+sitemap greenhouse label="My Greenhouse Control Panel" {
+   Frame label="Arduino Nano sensor hub and relay control ethernet connected to Openhabian" {
        Text item=Airtemp valuecolor=[>75="orange",>70="green",<=70="blue"]
        Text item=Humidity valuecolor=[=="BRIGHT"="orange",=="NORMAL"="green",=="DARK"="gray"]
        Text item=Pressure valuecolor=[>55="orange",>45="green",<=45="blue"]
        Text item=Accurrent valuecolor=[>55="orange",>45="green",<=45="blue"]
        Text item=Acvolt valuecolor=[>55="orange",>45="green",<=45="blue"]
-       Text item=Acwatts valuecolor=[>55="orange",>45="green",<=45="blue"]
+
+       Text item=Relay1 valuecolor=[>55="orange",>45="green",<=45="blue"] 
+       Text item=Relay2  valuecolor=[>55="orange",>45="green",<=45="blue"]
        
        }
    

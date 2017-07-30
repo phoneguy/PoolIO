@@ -1,0 +1,15 @@
+sitemap pooliocharts label="My PoolIO Graphs" {
+  Frame label="Air, Pool and Solar Return Temperature Graphs" {
+        Chart label="Last Day Temp" item=Airtemp period=d refresh=30000
+        Chart label="Last Day Temp" item=Pooltemp period=d refresh=30000
+        Chart label="Last Day Temp" item=Solartemp period=d refresh=30000
+
+        }
+  Frame label="PoolIO Hydro Graphs" {
+        Chart label="Last Day Temp" item=Acvolt period=d refresh=30000
+        Chart label="Last Day Temp" item=Accurrent period=d refresh=30000
+        Chart label="Last Day Temp" item=Acwatts period=d refresh=30000
+
+        }
+}
+

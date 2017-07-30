@@ -1,4 +1,4 @@
-sitemap arduino label="My Pool Control" {
+sitemap poolio label="My Pool Control" {
    Frame label="Shed" {
        Text item=Pooltemp  valuecolor=[>70="orange", >80="green", <=70="blue"]
        Text item=Airtemp   valuecolor=[>80="orange", >70="green", <=70="blue"]
@@ -6,20 +6,15 @@ sitemap arduino label="My Pool Control" {
        Text item=Humidity  valuecolor=[>60="orange", >50="green", <50="blue", >70="red"]
        Text item=Pressure  valuecolor=[>996="blue", >986="green", <=984="grey"]
        Text item=Accurrent valuecolor=[>55="orange", >45="green", <=45="blue"]
-       Text item=Acwatts   valuecolor=[>13="orange", >11="green", <=11="blue"]
+       Text item=Acwatts   valuecolor=[>100="orange", >1000="red", <=100="blue"]
        Text item=Acvolt    valuecolor=[>117="orange", >114="green", <=114="blue"]
        Text item=Relay1    valuecolor=[>55="orange", >45="green", <=45="blue"] 
        Text item=Relay2    valuecolor=[>55="orange", >45="green", <=45="blue"]
        Switch item=Pump    icon="light" mappings=[OFF="Pump OFF", ON="Pump ON"]
        Switch item=Light   icon="light" mappings=[OFF="Light OFF", ON="Light ON"]
-
+       Switch item=Debug   icon="light" mappings=[OFF="Debug OFF", ON="Debug ON"]
+        
        }
-  Frame label="Temperature Graph" {
-        Chart label="Last Day Temp" item=Airtemp period=d refresh=30000
-        Chart label="Last Day Temp" item=Pooltemp period=d refresh=30000
-        Chart label="Last Day Temp" item=Solartemp period=d refresh=30000
-
-        }   
 
 }
 

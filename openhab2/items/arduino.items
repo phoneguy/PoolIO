@@ -1,14 +1,17 @@
+Group All
+
 String Arduino "Arduino [%s]" {serial="/dev/ttyUSB0@9600"}
 DateTime Date    "Date [%1$tA, %1$td.%1$tm.%1$tY %1$tH:%1$tM]"  { channel="ntp:ntp:local:dateTime" }
 Number Pooltemp  "Pool Temperature [%.1f]" <temperature>
 Number Airtemp   "Air Temperature [%.1f]"  <temperature>
+Number Solartemp "Solar Temperature [%.1f]"  <temperature>
 Number Humidity  "Humidity [%d]"           <humidity>
 Number Pressure  "Air Pressure [%d]"       <pressure>
-Number Dccurrent "DC Current [%.1f]"       <battery>
-Number Dcvolt    "DC Voltage [%.1f]"       <battery>   
-Number Accurrent "AC Current [%.1f]"       <battery>
 Number Acvolt    "AC Voltage [%.1f]"       <battery>
+Number Accurrent "AC Current [%.1f]"       <battery>
+Number Acwatts   "AC Watts [%.1f]"         <battery>
 Number Relay1    "Relay One [%d]"          <switch>        
 Number Relay2    "Relay Two [%d]"          <switch>          
 Switch Pump      "Pool Pump"  {serial="/dev/ttyUSB0@9600,ON(R11),OFF(R10)"}    
 Switch Light     "Shed Light" {serial="/dev/ttyUSB0@9600,ON(R21),OFF(R20)"}    
+Switch Debug     "DEBUG out USB Serial" {serial="/dev/ttyUSB0@9600,ON(D1),OFF(D0)"}

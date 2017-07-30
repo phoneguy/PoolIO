@@ -1,0 +1,11 @@
+sitemap hydropanelcharts label="My Hydro Panel Control Charts" {
+   Frame label="100 AMP 234 Volt Panel" {
+        Chart label="Last Day Volts" item=Acvolt period=d refresh=30000
+        Chart label="Last Day Current" item=Accurrent period=d refresh=30000
+        Chart label="Last Day Watts" item=Acwatts period=d refresh=30000
+
+        }
+}
+
+
+
