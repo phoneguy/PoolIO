@@ -2,19 +2,30 @@
         HMC5883 Compass
 */
 
-void init_compass(void) {
+void hmc5883_init(void) {
          
     // Initialize and set continuous mode
-    Wire.begin();
+
+    //Wire.begin();
+    int n = Wire.requestFrom(HMC5883_ADDRESS, 2);
+    if (n == 2) // two bytes received
+    { 
     Wire.beginTransmission(HMC5883_ADDRESS);
     Wire.write(0x02);    
-    Wire.write(0x00); 
+    Wire.write(0x00);
     Wire.endTransmission();
-    Serial.print("HMC5883 Init");
+    compass_state = 1;
+    Serial.println("hmc5883 init");
+    } else {
+    compass_state = 0;
+    //Serial.println("hmc5883 not found");
+    }
+    
 }
 
-int read_compass(int z) {
-  
+//int read_compass(int z, int x, int y) {
+  int read_compass() {
+
     Wire.beginTransmission(HMC5883_ADDRESS);
     Wire.write(0x03); // Select register 3, X MSB register
     Wire.endTransmission();
@@ -37,8 +48,7 @@ int read_compass(int z) {
    // Serial.print(y);
    // Serial.print("  z: ");
    // Serial.println(z);
-    z = x - y - z;
-    return z;
+    return x,y,z;
 }
 
 

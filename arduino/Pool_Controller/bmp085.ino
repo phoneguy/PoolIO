@@ -26,6 +26,24 @@ long b5;
 // Stores all of the bmp085's calibration values into global variables
 // Calibration values are required to calculate temp and pressure
 // This function should be called at the beginning of the program
+// Read 2 bytes from the BMP085
+// First byte will be from 'address'
+// Second byte will be from 'address'+1
+int bmp085_init(void)
+{
+//Wire.begin();
+    int n = Wire.requestFrom(HMC5883_ADDRESS, 2);
+    if (n == 2) {
+    baro_state = 1;
+    Serial.println("bmp085 init");
+    bmp085Calibration();
+    } else {
+        baro_state = 0;
+        //Serial.println("BMP085 NOT FOUND");
+        }
+    
+}
+
 void bmp085Calibration()
 {
   ac1 = bmp085ReadInt(0xAA);
@@ -39,7 +57,6 @@ void bmp085Calibration()
   mb = bmp085ReadInt(0xBA);
   mc = bmp085ReadInt(0xBC);
   md = bmp085ReadInt(0xBE);
-  Serial.print("BMP085 Calibrated");
 }
 
 // Calculate temperature in deg C
@@ -120,8 +137,7 @@ int bmp085ReadInt(unsigned char address)
   Wire.endTransmission();
 
   Wire.requestFrom(BMP085_ADDRESS, 2);
-  while(Wire.available()<2)
-    ;
+  while(Wire.available()<2);
   msb = Wire.read();
   lsb = Wire.read();
 

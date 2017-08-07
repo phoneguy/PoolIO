@@ -24,7 +24,7 @@
  *  20111201 - updated to work with Arduino 1.0 (breaks compatibility with Arduino <= 0023)
  *
  */
-
+/*
 #ifndef BLINKM_FUNCS_H
 #define BLINKM_FUNCS_H
 
@@ -62,6 +62,8 @@ static void BlinkM_reset()
 // each call to twi_writeTo() should return 0 if device is there
 // or other value (usually 2) if nothing is at that address
 // 
+
+/*
 static void BlinkM_scanI2CBus(byte from, byte to, 
                               void(*callback)(byte add, byte result) ) 
 {
@@ -99,6 +101,7 @@ static void BlinkM_startPowerWithPins(byte pwrpin, byte gndpin)
   PORTC &=~ _BV(gndpin);
   PORTC |=  _BV(pwrpin);
   */
+/*
 }
 
 // FIXME: make this more Arduino-like
@@ -511,6 +514,8 @@ static int BlinkM_doFactoryReset()
 
     writeScript( addr, script);
   */
+  
+  /*
   return 0;
 }
 
